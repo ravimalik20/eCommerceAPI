@@ -17,6 +17,8 @@ Route::get('/', function () {
 
 Route::group(['prefix' => 'api/v0.1'], function () {
     Route::resource("category", "CategoryController");
+
+    Route::resource("color", "ColorController");
 });
 
 ?>
