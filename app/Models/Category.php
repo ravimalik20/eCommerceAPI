@@ -11,7 +11,7 @@ class Category extends Model
 
     protected $fillable = ["name", "parent"];
 
-    public static function validate($inputs, $show)
+    public static function validate($inputs, $show=false)
     {
         $rules = [
             "name" => "required|string",
