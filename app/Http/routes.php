@@ -14,3 +14,9 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::group(['prefix' => 'api/v0.1'], function () {
+    Route::resource("category", "CategoryController");
+});
+
+?>
