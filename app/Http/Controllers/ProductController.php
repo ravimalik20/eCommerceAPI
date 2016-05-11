@@ -6,9 +6,9 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 
-use App\Models\Vendor;
+use App\Models\Product;
 
-class VendorController extends Controller
+class ProductController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,9 +17,9 @@ class VendorController extends Controller
      */
     public function index()
     {
-        $vendors = Vendor::all();
+        $products = Product::getAll();
 
-        return $vendors->toJson();
+        return $products->toJson();
     }
 
     /**
@@ -40,7 +40,8 @@ class VendorController extends Controller
      */
     public function store(Request $request)
     {
-        $validation = Vendor::validate($request->all());
+        $validation = Product::validate($request->all());
+
         if ($validation->fails()) {
             $response = [
                 "status" => "error",
@@ -50,20 +51,28 @@ class VendorController extends Controller
             return response()->json($response);
         }
 
-        $name = $request->input('name', null);
+        $name = $request->input("name");
+        $description = $request->input("description");
+        $vendor = $request->input("vendor");
+        $manufacturer = $request->input("manufacturer");
+        $category = $request->input("category");
+        $frozen = $request->input("frozen");
+        $color = $request->input("color");
+        $size = $request->input("size");
 
-        $vendor = Vendor::make($name);
+        $product = Product::make($name, $description, $vendor, $manufacturer,
+            $category, $frozen, $color, $size);
 
-        if ($vendor) {
+        if ($product) {
             $response = [
                 "status" => "success",
-                "id" => $vendor->id
+                "id" => $product->id
             ];
         }
         else {
             $response = [
                 "status" => "error",
-                "messages" => ["Some error occured while saving the data"]
+                "messages" => ["Error occured in saving product."]
             ];
         }
 
@@ -78,9 +87,14 @@ class VendorController extends Controller
      */
     public function show($id)
     {
-        $vendor = Vendor::findOrFail($id);
+        $product = Product::getObj($id);
 
-        return $vendor->toJson();
+        if (!$product) {
+            return abort(404);
+        }
+        else {
+            return $product->toJson();
+        }
     }
 
     /**
@@ -103,7 +117,8 @@ class VendorController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $validation = Vendor::validate($request->all());
+        $validation = Product::validate($request->all());
+
         if ($validation->fails()) {
             $response = [
                 "status" => "error",
@@ -113,20 +128,28 @@ class VendorController extends Controller
             return response()->json($response);
         }
 
-        $name = $request->input('name', null);
+        $name = $request->input("name");
+        $description = $request->input("description");
+        $vendor = $request->input("vendor");
+        $manufacturer = $request->input("manufacturer");
+        $category = $request->input("category");
+        $frozen = $request->input("frozen");
+        $color = $request->input("color");
+        $size = $request->input("size");
 
-        $vendor = Vendor::updateObj($id, $name);
+        $product = Product::updateObj($id, $name, $description, $vendor, $manufacturer,
+            $category, $frozen, $color, $size);
 
-        if ($vendor) {
+        if ($product) {
             $response = [
                 "status" => "success",
-                "id" => $vendor->id
+                "id" => $product->id
             ];
         }
         else {
             $response = [
                 "status" => "error",
-                "messages" => ["Some error occured while saving the data"]
+                "messages" => ["Error occured in saving product."]
             ];
         }
 
@@ -141,14 +164,21 @@ class VendorController extends Controller
      */
     public function destroy($id)
     {
-        $vendor = Vendor::find($id);
+        $product = Product::find($id);
 
-        if (!$vendor)
-            return abort(404);
+        if ($product) {
+            $product->delete();
 
-        $vendor->delete();
-
-        $response = ["status" => "success"];
+            $response = [
+                "status" => "success"
+            ];
+        }
+        else {
+            $response = [
+                "status" => "error",
+                "messages" => ["Product does not exist."]
+            ];
+        }
 
         return response()->json($response);
     }
