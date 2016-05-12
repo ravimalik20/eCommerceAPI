@@ -48,7 +48,7 @@ class ProductController extends Controller
                 "messages" => $validation->messages()->all()
             ];
 
-            return response()->json($response);
+            return $this->responseJson($response, 400);
         }
 
         $name = $request->input("name");
@@ -74,6 +74,8 @@ class ProductController extends Controller
                 "status" => "error",
                 "messages" => ["Error occured in saving product."]
             ];
+
+            return $this->responseJson($response, 400);
         }
 
         return response()->json($response);
@@ -125,7 +127,7 @@ class ProductController extends Controller
                 "messages" => $validation->messages()->all()
             ];
 
-            return response()->json($response);
+            return $this->responseJson($response, 400);
         }
 
         $name = $request->input("name");
@@ -151,6 +153,8 @@ class ProductController extends Controller
                 "status" => "error",
                 "messages" => ["Error occured in saving product."]
             ];
+
+            return $this->responseJson($response, 400);
         }
 
         return response()->json($response);
@@ -178,6 +182,8 @@ class ProductController extends Controller
                 "status" => "error",
                 "messages" => ["Product does not exist."]
             ];
+
+            return $this->responseJson($response, 400);
         }
 
         return response()->json($response);

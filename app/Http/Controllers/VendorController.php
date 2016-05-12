@@ -47,7 +47,7 @@ class VendorController extends Controller
                 "messages" => $validation->messages()->all()
             ];
 
-            return response()->json($response);
+            return $this->responseJson($response, 400);
         }
 
         $name = $request->input('name', null);
@@ -65,6 +65,8 @@ class VendorController extends Controller
                 "status" => "error",
                 "messages" => ["Some error occured while saving the data"]
             ];
+
+            return $this->responseJson($response, 400);
         }
 
         return response()->json($response);
@@ -110,7 +112,7 @@ class VendorController extends Controller
                 "messages" => $validation->messages()->all()
             ];
 
-            return response()->json($response);
+            return $this->responseJson($response, 400);
         }
 
         $name = $request->input('name', null);
@@ -128,6 +130,8 @@ class VendorController extends Controller
                 "status" => "error",
                 "messages" => ["Some error occured while saving the data"]
             ];
+
+            return $this->responseJson($response, 400);
         }
 
         return response()->json($response);

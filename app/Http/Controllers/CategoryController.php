@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 use App\Http\Requests;
 
@@ -47,7 +48,7 @@ class CategoryController extends Controller
                 "messages" => $validation->messages()->all()
             ];
 
-            return json_encode($response);
+            return $this->responseJson($response, 400);
         }
 
         $parent = $request->input('parent', null);
@@ -64,6 +65,8 @@ class CategoryController extends Controller
                 "status" => "error",
                 "messages" => ["Some error occured while saving the data"]
             ];
+
+            return $this->responseJson($response, 400);
         }
 
         return response()->json($response);
@@ -109,7 +112,7 @@ class CategoryController extends Controller
                 "messages" => $validation->messages()->all()
             ];
 
-            return response()->json($response);
+            return $this->responseJson($response, 400);
         }
 
         $name = $request->input("name");
@@ -126,6 +129,8 @@ class CategoryController extends Controller
                 "status" => "error",
                 "messages" => ["Some error occured while saving the data"]
             ];
+
+            return $this->responseJson($response, 400);
         }
 
         return response()->json($response);

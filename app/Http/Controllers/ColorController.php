@@ -47,7 +47,7 @@ class ColorController extends Controller
                 "messages" => $validation->messages()->all()
             ];
 
-            return response()->json($response);
+            return $this->responseJson($response, 400);
         }
 
         $name = $request->input('name', null);
@@ -66,6 +66,8 @@ class ColorController extends Controller
                 "status" => "error",
                 "messages" => ["Some error occured while saving the data"]
             ];
+
+            return $this->responseJson($response, 400);
         }
 
         return response()->json($response);
@@ -111,7 +113,7 @@ class ColorController extends Controller
                 "messages" => $validation->messages()->all()
             ];
 
-            return response()->json($response);
+            return $this->responseJson($response, 400);
         }
 
         $name = $request->input('name', null);
@@ -130,6 +132,8 @@ class ColorController extends Controller
                 "status" => "error",
                 "messages" => ["Some error occured while saving the data"]
             ];
+
+            return $this->responseJson($response, 400);
         }
 
         return response()->json($response);
