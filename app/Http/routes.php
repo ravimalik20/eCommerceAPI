@@ -25,6 +25,8 @@ Route::group(['prefix' => 'api/v0.1'], function () {
     Route::resource("vendor", "VendorController");
 
     Route::resource("product", "ProductController");
+
+    Route::resource("order", "OrderController");
 });
 
 ?>
