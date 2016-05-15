@@ -19,7 +19,7 @@ class ColorController extends Controller
     {
         $colors = Color::all();
 
-        return $colors->toJson();
+        return $this->responseJson($colors, 200);
     }
 
     /**
@@ -67,10 +67,10 @@ class ColorController extends Controller
                 "messages" => ["Some error occured while saving the data"]
             ];
 
-            return $this->responseJson($response, 400);
+            return $this->responseJson($response, 500);
         }
 
-        return response()->json($response);
+        return $this->responseJson($response, 200);
     }
 
     /**
@@ -83,7 +83,7 @@ class ColorController extends Controller
     {
         $color = Color::findOrFail($id);
 
-        return $color->toJson();
+        return $this->responseJson($color, 200);
     }
 
     /**
@@ -133,10 +133,10 @@ class ColorController extends Controller
                 "messages" => ["Some error occured while saving the data"]
             ];
 
-            return $this->responseJson($response, 400);
+            return $this->responseJson($response, 500);
         }
 
-        return response()->json($response);
+        return $this->responseJson($response, 200);
     }
 
     /**
@@ -156,6 +156,6 @@ class ColorController extends Controller
 
         $response = ["status" => "success"];
 
-        return response()->json($response);
+        return $this->responseJson($response, 200);
     }
 }

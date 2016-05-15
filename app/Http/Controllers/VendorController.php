@@ -19,7 +19,7 @@ class VendorController extends Controller
     {
         $vendors = Vendor::all();
 
-        return $vendors->toJson();
+        return $this->responseJson($vendors, 200);
     }
 
     /**
@@ -66,10 +66,10 @@ class VendorController extends Controller
                 "messages" => ["Some error occured while saving the data"]
             ];
 
-            return $this->responseJson($response, 400);
+            return $this->responseJson($response, 500);
         }
 
-        return response()->json($response);
+        return $this->responseJson($response, 200);
     }
 
     /**
@@ -82,7 +82,7 @@ class VendorController extends Controller
     {
         $vendor = Vendor::findOrFail($id);
 
-        return $vendor->toJson();
+        return $this->responseJson($vendor, 200);
     }
 
     /**
@@ -131,10 +131,10 @@ class VendorController extends Controller
                 "messages" => ["Some error occured while saving the data"]
             ];
 
-            return $this->responseJson($response, 400);
+            return $this->responseJson($response, 500);
         }
 
-        return response()->json($response);
+        return $this->responseJson($response, 200);
     }
 
     /**
@@ -154,6 +154,6 @@ class VendorController extends Controller
 
         $response = ["status" => "success"];
 
-        return response()->json($response);
+        return $this->responseJson($response, 200);
     }
 }

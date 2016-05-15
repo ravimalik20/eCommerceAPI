@@ -20,7 +20,7 @@ class CategoryController extends Controller
     {
         $categories = Category::all();
 
-        return $categories->toJson();
+        return $this->responseJson($categories, 200);
     }
 
     /**
@@ -66,10 +66,10 @@ class CategoryController extends Controller
                 "messages" => ["Some error occured while saving the data"]
             ];
 
-            return $this->responseJson($response, 400);
+            return $this->responseJson($response, 500);
         }
 
-        return response()->json($response);
+        return $this->responseJson($response, 200);
     }
 
     /**
@@ -82,7 +82,7 @@ class CategoryController extends Controller
     {
         $category = Category::findOrFail($id);
 
-        return $category->toJson();
+        return $this->responseJson($category, 200);
     }
 
     /**
@@ -133,7 +133,7 @@ class CategoryController extends Controller
             return $this->responseJson($response, 400);
         }
 
-        return response()->json($response);
+        return $this->responseJson($response, 200);
     }
 
     /**
@@ -153,6 +153,6 @@ class CategoryController extends Controller
 
         $response = ["status" => "success"];
 
-        return response()->json($response);
+        return $this->responseJson($response, 200);
     }
 }

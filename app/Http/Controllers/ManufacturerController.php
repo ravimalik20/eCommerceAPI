@@ -19,7 +19,7 @@ class ManufacturerController extends Controller
     {
         $manufacturers = Manufacturer::all();
 
-        return $manufacturers->toJson();
+        return $this->responseJson($manufacturers, 200);
     }
 
     /**
@@ -66,10 +66,10 @@ class ManufacturerController extends Controller
                 "messages" => ["Some error occured while saving the data"]
             ];
 
-            return $this->responseJson($response, 400);
+            return $this->responseJson($response, 500);
         }
 
-        return response()->json($response);
+        return $this->responseJson($response, 200);
     }
 
     /**
@@ -82,7 +82,7 @@ class ManufacturerController extends Controller
     {
         $manufacturer = Manufacturer::findOrFail($id);
 
-        return $manufacturer->toJson();
+        return $this->responseJson($manufacturer, 200);
     }
 
     /**
@@ -131,10 +131,10 @@ class ManufacturerController extends Controller
                 "messages" => ["Some error occured while saving the data"]
             ];
 
-            return $this->responseJson($response, 400);
+            return $this->responseJson($response, 500);
         }
 
-        return response()->json($response);
+        return $this->responseJson($response, 200);
     }
 
     /**
@@ -154,6 +154,6 @@ class ManufacturerController extends Controller
 
         $response = ["status" => "success"];
 
-        return response()->json($response);
+        return $this->responseJson($response, 200);
     }
 }

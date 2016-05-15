@@ -19,7 +19,7 @@ class OrderController extends Controller
     {
         $orders = Order::with("products")->get();
 
-        return $orders->toJson();
+        return $this->responseJson($orders, 200);
     }
 
     /**
@@ -63,7 +63,7 @@ class OrderController extends Controller
                 "status" => "success", "id" => $order->id
             ];
 
-            return response()->json($response);
+            return $this->responseJson($response, 200);
         }
         else {
             $response = [
@@ -85,7 +85,7 @@ class OrderController extends Controller
     {
         $order = Order::with('products')->where("id", $id)->first();
 
-        return $order->toJson();
+        return $this->responseJson($order, 200);
     }
 
     /**

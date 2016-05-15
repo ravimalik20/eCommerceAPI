@@ -13,7 +13,7 @@ class Controller extends BaseController
 {
     use AuthorizesRequests, AuthorizesResources, DispatchesJobs, ValidatesRequests;
 
-    protected function responseJson($obj, $code)
+    protected function responseJson($obj, $code=200)
     {
         $response = new Response;
 

@@ -19,7 +19,7 @@ class ProductController extends Controller
     {
         $products = Product::getAll();
 
-        return $products->toJson();
+        return $this->responseJson($products, 200);
     }
 
     /**
@@ -75,10 +75,10 @@ class ProductController extends Controller
                 "messages" => ["Error occured in saving product."]
             ];
 
-            return $this->responseJson($response, 400);
+            return $this->responseJson($response, 500);
         }
 
-        return response()->json($response);
+        return $this->responseJson($response, 200);
     }
 
     /**
@@ -95,7 +95,7 @@ class ProductController extends Controller
             return abort(404);
         }
         else {
-            return $product->toJson();
+            return $this->responseJson($product, 200);
         }
     }
 
@@ -154,10 +154,10 @@ class ProductController extends Controller
                 "messages" => ["Error occured in saving product."]
             ];
 
-            return $this->responseJson($response, 400);
+            return $this->responseJson($response, 500);
         }
 
-        return response()->json($response);
+        return $this->responseJson($response, 200);
     }
 
     /**
@@ -183,9 +183,9 @@ class ProductController extends Controller
                 "messages" => ["Product does not exist."]
             ];
 
-            return $this->responseJson($response, 400);
+            return $this->responseJson($response, 404);
         }
 
-        return response()->json($response);
+        return $this->responseJson($response, 200);
     }
 }
