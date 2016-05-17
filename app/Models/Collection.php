@@ -11,6 +11,11 @@ class Collection extends Model
 
     protected $fillable = ["name", "description", "gender"];
 
+    public function products()
+    {
+        return $this->belongsToMany(Product::class, "collection_product");
+    }
+
     public static function validate($inputs, $show=false)
     {
         $rules = [
