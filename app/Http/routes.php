@@ -30,6 +30,7 @@ Route::group(['prefix' => 'api/v0.1'], function () {
     Route::resource("order", "OrderController");
 
     Route::resource('user.wishlist', "WishListController");
+    Route::resource('user.address', 'UserAddressController');
 
     Route::resource('collection', "CollectionController");
     Route::resource('collection.product', "CollectionProductController");

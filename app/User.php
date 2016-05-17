@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 use App\Models\Product;
+use App\Models\Address;
 
 class User extends Authenticatable
 {
@@ -29,5 +30,10 @@ class User extends Authenticatable
     public function wishList()
     {
         return $this->belongsToMany(Product::class, 'wish_list');
+    }
+
+    public function addresses()
+    {
+        return $this->hasMany(Address::class);
     }
 }
