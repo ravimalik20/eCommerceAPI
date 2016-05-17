@@ -11,6 +11,11 @@ class Category extends Model
 
     protected $fillable = ["name", "parent"];
 
+    public function products()
+    {
+        return $this->belongsToMany(Product::class, 'category_product');
+    }
+
     public static function validate($inputs, $show=false)
     {
         $rules = [
