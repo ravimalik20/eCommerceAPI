@@ -58,10 +58,11 @@ class ProductController extends Controller
         $category = $request->input("category");
         $frozen = $request->input("frozen");
         $color = $request->input("color");
-        $size = $request->input("size");
+        $size = $request->input("size");    
+        $gender = $request->input("gender");
 
         $product = Product::make($name, $description, $vendor, $manufacturer,
-            $category, $frozen, $color, $size);
+            $category, $frozen, $color, $size, $gender);
 
         if ($product) {
             $response = [
@@ -138,9 +139,10 @@ class ProductController extends Controller
         $frozen = $request->input("frozen");
         $color = $request->input("color");
         $size = $request->input("size");
+        $gender = $request->input("gender");
 
         $product = Product::updateObj($id, $name, $description, $vendor, $manufacturer,
-            $category, $frozen, $color, $size);
+            $category, $frozen, $color, $size, $gender);
 
         if ($product) {
             $response = [

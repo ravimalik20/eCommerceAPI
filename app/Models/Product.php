@@ -9,7 +9,8 @@ class Product extends Model
 {
     protected $table = "product";
 
-    protected $fillable = ["base_product_id", "color_id", "size", "frozen"];
+    protected $fillable = ["base_product_id", "color_id", "size", "frozen",
+        "gender"];
 
     public static function validate($inputs)
     {
@@ -21,14 +22,15 @@ class Product extends Model
             "category" => "required|integer|exists:category,id",
             "frozen" => "boolean",
             "color" => "string|regex:/^[0-9a-fA-F]{6}$/",
-            "size" => "string"
+            "size" => "string",
+            "gender" => "in:male,female,unisex"
         ];
 
         return Validator::make($inputs, $rules);
     }
 
     public static function make($name, $description, $vendor, $manufacturer,
-        $category, $frozen, $color, $size, $id=null)
+        $category, $frozen, $color, $size, $gender="unisex", $id=null)
     {
         $base_product = BaseProduct::create([
             "name" => $name,
@@ -46,14 +48,15 @@ class Product extends Model
             "base_product_id" => $base_product->id,
             "color_id" => isset($colorObj) ? $colorObj->id : null,
             "size" => empty($size) ? "" : $size,
-            "frozen" => empty($frozen) ? false : $frozen
+            "frozen" => empty($frozen) ? false : $frozen,
+            "gender" => empty($gender) ? "unisex" : $gender
         ]);
 
         return $product;
     }
 
     public static function updateObj($id, $name, $description, $vendor, $manufacturer,
-        $category, $frozen, $color, $size)
+        $category, $frozen, $color, $size, $gender)
     {
         $product = Product::find($id);
 
@@ -75,6 +78,7 @@ class Product extends Model
         $product->color_id = isset($colorObj) ? $colorObj->id : null;
         $product->size = empty($size) ? "" : $size;
         $product->frozen = empty($frozen) ? false : $frozen;
+        $product->gender = empty($gender) ? "unisex" : $gender;
 
         $product->save();
 
