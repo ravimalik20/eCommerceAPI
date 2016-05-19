@@ -31,6 +31,7 @@ Route::group(['prefix' => 'api/v0.1'], function () {
 
     Route::resource('user.wishlist', "WishListController");
     Route::resource('user.address', 'UserAddressController');
+    Route::resource('user.cart', 'CartController');
 
     Route::resource('collection', "CollectionController");
     Route::resource('collection.product', "CollectionProductController");
