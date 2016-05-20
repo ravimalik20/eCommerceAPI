@@ -11,12 +11,14 @@ use App\Models\Address;
 
 class UserAddressController extends Controller
 {
+    const DEFAULT_PER_PAGE = 10;
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($user_id)
+    public function index(Request $request, $user_id)
     {
         $user = User::find($user_id);
         if (!$user) {
@@ -28,7 +30,11 @@ class UserAddressController extends Controller
             return $this->responseJson($response, 404);
         }
 
-        $addresses = $user->addresses;
+        $items_per_page = $request->input('per_page', self::DEFAULT_PER_PAGE);
+        if (!is_numeric($items_per_page))
+            $items_per_page = self::DEFAULT_PER_PAGE;
+
+        $addresses = $user->addresses()->paginate($items_per_page);
 
         return $this->responseJson($addresses, 200);
     }

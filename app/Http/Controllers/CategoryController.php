@@ -11,14 +11,20 @@ use App\Models\Category;
 
 class CategoryController extends Controller
 {
+    const DEFAULT_PER_PAGE = 10;
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $categories = Category::all();
+        $items_per_page = $request->input('per_page', self::DEFAULT_PER_PAGE);
+        if (!is_numeric($items_per_page))
+            $items_per_page = self::DEFAULT_PER_PAGE;
+
+        $categories = Category::paginate($items_per_page);
 
         return $this->responseJson($categories, 200);
     }

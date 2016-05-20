@@ -11,12 +11,14 @@ use App\Models\CollectionProduct;
 
 class CollectionProductController extends Controller
 {
+    const DEFAULT_PER_PAGE = 10;
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($collection_id)
+    public function index(Request $request, $collection_id)
     {
         $collection = Collection::find($collection_id);
 
@@ -29,7 +31,11 @@ class CollectionProductController extends Controller
             return $this->responseJson($response, 400);
         }
 
-        $products = $collection->products;
+        $items_per_page = $request->input('per_page', self::DEFAULT_PER_PAGE);
+        if (!is_numeric($items_per_page))
+            $items_per_page = self::DEFAULT_PER_PAGE;
+
+        $products = $collection->products()->paginate($items_per_page);
 
         return $this->responseJson($products, 200);
     }

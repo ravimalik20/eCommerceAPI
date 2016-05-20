@@ -85,10 +85,10 @@ class Product extends Model
         return $product;
     }
 
-    public static function getAll()
+    public static function getAll($items_per_page=10)
     {
         $products = Product::join("base_product", "base_product.id", "=", "product.id")
-            ->get();
+            ->paginate($items_per_page);
 
         return $products;
     }

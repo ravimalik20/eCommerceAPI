@@ -10,14 +10,20 @@ use App\Models\Order;
 
 class OrderController extends Controller
 {
+    const DEFAULT_PER_PAGE = 10;
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $orders = Order::with("products")->get();
+        $items_per_page = $request->input('per_page', self::DEFAULT_PER_PAGE);
+        if (!is_numeric($items_per_page))
+            $items_per_page = self::DEFAULT_PER_PAGE;
+
+        $orders = Order::with("products")->paginate($items_per_page);
 
         return $this->responseJson($orders, 200);
     }
