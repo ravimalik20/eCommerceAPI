@@ -16,6 +16,8 @@ Route::get('/', function () {
 });
 
 Route::group(['prefix' => 'api/v0.1'], function () {
+    Route::post('login', 'ApiAuthController@authenticate');
+
     Route::resource('user', 'UserController');
 });
 

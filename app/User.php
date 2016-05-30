@@ -67,4 +67,12 @@ class User extends Authenticatable
     {
         return $this->hasMany(Cart::class)->with('status');
     }
+
+    public function updateToken()
+    {
+        $this->api_token = str_random(60);
+        $this->save();
+
+        return $this->api_token;
+    }
 }
