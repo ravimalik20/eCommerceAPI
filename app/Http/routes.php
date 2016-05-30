@@ -15,6 +15,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::group(['prefix' => 'api/v0.1'], function () {
+    Route::resource('user', 'UserController');
+});
+
 Route::group(['prefix' => 'api/v0.1', 'middleware' => 'auth:api'], function () {
     Route::resource("category", "CategoryController");
     Route::resource('category.product', "CategoryProductController");
