@@ -28,6 +28,7 @@ Route::group(['prefix' => 'api/v0.1', 'middleware' => 'auth:api'], function () {
     Route::resource("vendor", "VendorController");
 
     Route::resource("product", "ProductController");
+    Route::resource("product.image", "ProductImageController");
 
     Route::resource("order", "OrderController");
 
