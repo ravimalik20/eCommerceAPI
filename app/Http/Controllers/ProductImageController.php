@@ -16,9 +16,21 @@ class ProductImageController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($product_id)
     {
-        //
+        $product = Product::find($product_id);
+        if (!$product) {
+            $response = [
+                "status" => "error",
+                "messages" => ["Product does not exist."]
+            ];
+
+            return $this->responseJson($response, 400);
+        }
+
+        $images = $product->images;
+
+        return $this->responseJson($images, 200);
     }
 
     /**
@@ -87,9 +99,30 @@ class ProductImageController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($product_id, $id)
     {
-        //
+        $product = Product::find($product_id);
+        if (!$product) {
+            $response = [
+                "status" => "error",
+                "messages" => ["Product does not exist."]
+            ];
+
+            return $this->responseJson($response, 400);
+        }
+
+        $image = ProductImage::getObj($product_id, $id);
+
+        if (!$image) {
+            $response = [
+                "status" => "error",
+                "messages" => "No such image exists."
+            ];
+
+            return $this->responseJson($response, 404);
+        }
+
+        return $this->responseJson($image, 200);
     }
 
     /**

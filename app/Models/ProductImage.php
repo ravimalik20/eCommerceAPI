@@ -40,4 +40,22 @@ class ProductImage extends Model
 
         return $image_obj;
     }
+
+    public static function imageUrlPrefix()
+    {
+        $prefix = asset('/storage/');
+
+        return $prefix;
+    }
+
+    public static function getObj($product_id, $id)
+    {
+        $image = ProductImage::select('product_image.*')
+            ->selectRaw("CONCAT('".self::imageUrlPrefix()."', '/', path) as url")
+            ->where('product_id', $product_id)
+            ->where("id", $id)
+            ->first();
+
+        return $image;
+    }
 }

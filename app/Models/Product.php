@@ -101,4 +101,11 @@ class Product extends Model
 
         return $product;
     }
+
+    public function images()
+    {
+        return $this->hasMany(ProductImage::class)
+            ->select("product_image.*")
+            ->selectRaw("CONCAT('".ProductImage::imageUrlPrefix()."', '/', path) as url");
+    }
 }
