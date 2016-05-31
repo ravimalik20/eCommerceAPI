@@ -59,7 +59,7 @@ class ProductImageController extends Controller
             return $this->responseJson($response, 400);
         }
 
-        $image_request = $request->image('image');
+        $image_request = $request->file('image');
 
         $image = ProductImage::make($product_id, $image_request);
 
