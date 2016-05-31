@@ -11,8 +11,10 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::group(['prefix' => 'api/v0.1'], function () {
+    Route::post('login', 'ApiAuthController@authenticate');
+
+    Route::resource('user', 'UserController');
 });
 
 Route::group(['prefix' => 'api/v0.1', 'middleware' => 'auth:api'], function () {
@@ -37,10 +39,6 @@ Route::group(['prefix' => 'api/v0.1', 'middleware' => 'auth:api'], function () {
     Route::resource('collection', "CollectionController");
     Route::resource('collection.product', "CollectionProductController");
     
-});
-
-Route::get("test", function () {
-    return str_random(60);
 });
 
 ?>
