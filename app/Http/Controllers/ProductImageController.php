@@ -11,12 +11,14 @@ use App\Models\Product;
 
 class ProductImageController extends Controller
 {
+    const DEFAULT_PER_PAGE = 10;
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($product_id)
+    public function index(Request $request, $product_id)
     {
         $product = Product::find($product_id);
         if (!$product) {
@@ -28,7 +30,11 @@ class ProductImageController extends Controller
             return $this->responseJson($response, 400);
         }
 
-        $images = $product->images;
+        $items_per_page = $request->input('per_page', self::DEFAULT_PER_PAGE);
+        if (!is_numeric($items_per_page))
+            $items_per_page = self::DEFAULT_PER_PAGE;
+
+        $images = $product->images()->paginate($items_per_page);
 
         return $this->responseJson($images, 200);
     }
