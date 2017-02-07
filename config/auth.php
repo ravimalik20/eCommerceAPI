@@ -42,7 +42,7 @@ return [
         ],
 
         'api' => [
-            'driver' => 'passport',
+            'driver' => env('AUTH_API_DRIVER', 'token'),
             'provider' => 'users',
         ],
     ],

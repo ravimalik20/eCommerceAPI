@@ -20,6 +20,8 @@ class CategoryController extends Controller
      */
     public function index(Request $request)
     {
+        $this->authorize('index', \App\Models\Category::class);
+
         $items_per_page = $request->input('per_page', self::DEFAULT_PER_PAGE);
         if (!is_numeric($items_per_page))
             $items_per_page = self::DEFAULT_PER_PAGE;
@@ -47,6 +49,8 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
+        $this->authorize('create', Category::class);
+
         $validation = Category::validate($request->all());
         if ($validation->fails()) {
             $response = [
@@ -87,6 +91,8 @@ class CategoryController extends Controller
     public function show($id)
     {
         $category = Category::findOrFail($id);
+
+        $this->authorize('view', $category);
 
         return $this->responseJson($category, 200);
     }

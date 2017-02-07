@@ -50,6 +50,18 @@ class User extends Authenticatable
 
         return $this->api_token;
     }
+
+    public function role()
+    {
+        $role = UserRole::find($this->role_id);
+
+        if ($role) {
+            return $role->name;
+        }
+        else {
+            return "user";
+        }
+    }
 }
 
 ?>
