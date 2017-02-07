@@ -2,12 +2,15 @@
 
 namespace App;
 
+use Laravel\Passport\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
+use App\Models\UserRole;
+
 class User extends Authenticatable
 {
-    use Notifiable;
+    use HasApiTokens, Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -40,6 +43,11 @@ class User extends Authenticatable
     public function carts()
     {
         return $this->hasMany(Cart::class)->with('status');
+    }
+
+    public function role()
+    {
+        return $this->belongsTo(\App\Models\UserRole::class, 'role_id', 'id');
     }
 
     public function updateToken()
