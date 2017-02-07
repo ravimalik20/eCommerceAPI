@@ -20,6 +20,8 @@ class ColorController extends Controller
      */
     public function index(Request $request)
     {
+        $this->authorize('index', Color::class);
+
         $items_per_page = $request->input('per_page', self::DEFAULT_PER_PAGE);
         if (!is_numeric($items_per_page))
             $items_per_page = self::DEFAULT_PER_PAGE;
@@ -47,6 +49,8 @@ class ColorController extends Controller
      */
     public function store(Request $request)
     {
+        $this->authorize('create', Color::class);
+
         $validation = Color::validate($request->all());
         if ($validation->fails()) {
             $response = [
@@ -90,6 +94,8 @@ class ColorController extends Controller
     {
         $color = Color::findOrFail($id);
 
+        $this->authorize('view', $color);
+
         return $this->responseJson($color, 200);
     }
 
@@ -113,6 +119,9 @@ class ColorController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $color = Color::findOrFail($id);
+        $this->authorize('update', $color);
+
         $validation = Color::validate($request->all());
         if ($validation->fails()) {
             $response = [
@@ -154,6 +163,9 @@ class ColorController extends Controller
      */
     public function destroy($id)
     {
+        $color = Color::findOrFail();
+        $this->authorize('delete', $color);
+
         $color = Color::find($id);
 
         if (!$color)

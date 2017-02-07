@@ -6,6 +6,8 @@ use Laravel\Passport\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
+use App\Models\UserRole;
+
 class User extends Authenticatable
 {
     use HasApiTokens, Notifiable;
@@ -43,24 +45,17 @@ class User extends Authenticatable
         return $this->hasMany(Cart::class)->with('status');
     }
 
+    public function role()
+    {
+        return $this->belongsTo(\App\Models\UserRole::class, 'role_id', 'id');
+    }
+
     public function updateToken()
     {
         $this->api_token = str_random(60);
         $this->save();
 
         return $this->api_token;
-    }
-
-    public function role()
-    {
-        $role = UserRole::find($this->role_id);
-
-        if ($role) {
-            return $role->name;
-        }
-        else {
-            return "user";
-        }
     }
 }
 

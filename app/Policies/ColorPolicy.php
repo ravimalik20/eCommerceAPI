@@ -3,15 +3,15 @@
 namespace App\Policies;
 
 use App\User;
-use App\Models\Category;
+use App\Models\Color;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class CategoryPolicy
+class ColorPolicy
 {
     use HandlesAuthorization;
 
     /**
-    * Determine wether the user can view the category index.
+    * Determines wether user is allowed to view color index.
     */
     public function index(User $user)
     {
@@ -19,19 +19,19 @@ class CategoryPolicy
     }
 
     /**
-     * Determine whether the user can view the category.
+     * Determine whether the user can view the color.
      *
      * @param  App\User  $user
-     * @param  App\Category  $category
+     * @param  App\Color  $color
      * @return mixed
      */
-    public function view(User $user, Category $category)
+    public function view(User $user, Color $color)
     {
         return true;
     }
 
     /**
-     * Determine whether the user can create categories.
+     * Determine whether the user can create colors.
      *
      * @param  App\User  $user
      * @return mixed
@@ -42,25 +42,25 @@ class CategoryPolicy
     }
 
     /**
-     * Determine whether the user can update the category.
+     * Determine whether the user can update the color.
      *
      * @param  App\User  $user
-     * @param  App\Category  $category
+     * @param  App\Color  $color
      * @return mixed
      */
-    public function update(User $user, Category $category)
+    public function update(User $user, Color $color)
     {
         return $user->role->name == "admin";
     }
 
     /**
-     * Determine whether the user can delete the category.
+     * Determine whether the user can delete the color.
      *
      * @param  App\User  $user
-     * @param  App\Category  $category
+     * @param  App\Color  $color
      * @return mixed
      */
-    public function delete(User $user, Category $category)
+    public function delete(User $user, Color $color)
     {
         return $user->role->name == "admin";
     }

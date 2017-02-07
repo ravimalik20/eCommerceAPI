@@ -91,7 +91,6 @@ class CategoryController extends Controller
     public function show($id)
     {
         $category = Category::findOrFail($id);
-
         $this->authorize('view', $category);
 
         return $this->responseJson($category, 200);
@@ -117,6 +116,9 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $category = Category::findOrFail($id);
+        $this->authorize('update', $category);
+
         $validation = Category::validate($request->all(), true);
         if ($validation->fails()) {
             $response = [
@@ -156,7 +158,8 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        $category = Category::find($id);
+        $category = Category::findOrFail($id);
+        $this->authorize('delete', $category);
 
         if (!$category)
             return abort(404);
